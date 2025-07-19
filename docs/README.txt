@@ -18,3 +18,6 @@ Video communication:
 		Keep resolution down to min possible
 		Goal of 10-15 FPS
 test
+
+Packages:
+	pip install paho-mqtt
