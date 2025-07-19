@@ -25,6 +25,7 @@ def on_connect(client, userdata, flags, reasonCode, properties):
 
 client.on_connect = on_connect
 
+client.connect("localhost", 1883, 60)
 client.loop_start()  # Start the network loop in a background thread
 
 try:
