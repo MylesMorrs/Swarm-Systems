@@ -17,14 +17,24 @@ def get_ip_address():
 ip_address = get_ip_address()
 print(f"My IP address is: {ip_address}")
 
-client = mqtt.Client()
+# Use MQTTv5 for latest API
+client = mqtt.Client(protocol=mqtt.MQTTv5)
+
+def on_connect(client, userdata, flags, reasonCode, properties):
+    print("Connected with reason code", reasonCode)
+
+client.on_connect = on_connect
+
 client.connect("localhost", 1883, 60)
-while True:
-    try:
+client.loop_start()  # Start the network loop in a background thread
+
+try:
+    while True:
         client.publish("test/topic", "Hello from mother computer!")
         print("Message sent.")
         time.sleep(1)
-    except KeyboardInterrupt:
-        print("Exiting...")
-        break
+except KeyboardInterrupt:
+    print("Exiting...")
+    client.loop_stop()
+    client.disconnect()
 
