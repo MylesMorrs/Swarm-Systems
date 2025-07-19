@@ -18,7 +18,7 @@ ip_address = get_ip_address()
 print(f"My IP address is: {ip_address}")
 
 client = mqtt.Client()
-client.connect("localhost", 1883, 60)
+client.connect(ip_address, 1883, 60)
 while True:
     try:
         client.publish("test/topic", "Hello from mother computer!")
