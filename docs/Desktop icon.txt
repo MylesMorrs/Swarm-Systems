@@ -1,0 +1,45 @@
+To make a desktop icon that can run a script it needs three parts:
+
+    The code
+
+    The Shell script
+
+    and the Desktop Shortcut
+
+For the code you need to know the location of it (Right click on file in file manager --> Properties --> look for "Parent folder" to the right of it should be the location "/home/..../..." )
+
+The shell script:
+    First step create the shell script. This file can be located anywhere (My recommendation is the same folder as the code).
+    Run:
+        cd /home/..../...
+        nano name.sh
+    Now that the file is created we need it to run the code. The shell script can be thought of a automated terminal. It will run one line after the other. 
+    We want to get into the correct folder then run the code.
+    Like: 
+        cd /home/..../....
+        python3 code.python
+
+Desktop script:   
+    Next we want to make the desktop shortcut. This is really just telling us where the shell script is located and running that when pressed. 
+    We can tell the shell script to show the terminal. (Terminal=true) 
+    Icon if we want it we just need to tell it the image location. (Icon=/..../..../image.png)
+    We can name is with (Name= name of the application)
+    The most important line is the Exec, this is the file location of the shell script. (Exec=/..../..../..../name.sh)
+
+
+        [Desktop Entry]
+    Name=Send Drone Command
+    Comment=Launch MQTT GOTO Command
+    Exec=/home/mcuser/Mother/scripts/run_swarm.sh
+    Icon=/home/mcuser/Mother/assets/logo.png
+    Terminal=true
+    Type=Application
+    Encoding=UTF-8
+    Categories=Utility
+
+Now use we need to make the files executables to make everything work, we need to run the following command with the correct file name for each of the files
+executable command:
+    cmod +x file.extension 
+
+
+Lastly right click on the desktop icon and click "Allow Launching"
