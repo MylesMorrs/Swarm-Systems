@@ -30,9 +30,8 @@ client.loop_start()  # Start the network loop in a background thread
 
 try:
     while True:
-        client.publish("test/topic", "Hello from mother computer!")
+        client.publish("test/topic", input("Enter message to publish: "))
         # print("Message sent.")
-        time.sleep(1)
 except KeyboardInterrupt:
     print("Exiting...")
     client.loop_stop()
