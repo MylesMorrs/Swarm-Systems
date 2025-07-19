@@ -17,3 +17,4 @@ Video communication:
 			center based video resolution  
 		Keep resolution down to min possible
 		Goal of 10-15 FPS
+test
