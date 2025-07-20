@@ -7,6 +7,7 @@ ip_address = input("Input IP Address Of Mother (broker): ")
 
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
+    client.subscribe("test/topic")
 
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
