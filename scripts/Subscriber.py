@@ -9,6 +9,7 @@ def on_connect(client, userdata, flags, reasonCode, properties):
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
 
+# Use the CallbackAPIVersion enum
 client = mqtt.Client(protocol=mqtt.MQTTv5)
 client.on_connect = on_connect
 client.on_message = on_message
