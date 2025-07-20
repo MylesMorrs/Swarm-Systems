@@ -21,3 +21,6 @@ test
 
 Packages:
 	pip install paho-mqtt
+
+Docs:
+	https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
