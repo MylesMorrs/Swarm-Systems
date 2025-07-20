@@ -3,7 +3,7 @@ import socket
 
 client = mqtt.Client(protocol=mqtt.MQTTv5)
 
-ip_address = input("Input IP Address Of Mother (broker): ")
+ip_address = "192.168.1.85"
 
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
