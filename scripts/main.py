@@ -36,18 +36,31 @@ def on_disconnect(client, userdata, rc):
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
 
-client.on_connect = on_connect
-client.on_disconnect = on_disconnect
-client.on_message = on_message
+def main():
+    client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
+    client.on_message = on_message
 
-client.connect(ip_address, 1883, 60)
-client.loop_start()  # Start the network loop in a background thread
+    try:
+        client.connect(ip_address, 1883, 60)
+    except Exception as e:
+        print(f"Failed to connect to MQTT broker at {ip_address}: {e}")
+        return
 
-try:
-    while True:
-        client.publish("1", input("Enter message to publish: "))
-        # print("Message sent.")
-except KeyboardInterrupt:
-    print("Exiting...")
-    client.loop_stop()
-    client.disconnect()
+    client.loop_start()  # Start the network loop in a background thread
+
+    try:
+        while True:
+            message = input("Enter message to publish: ")
+            if message.lower() == 'exit':
+                break
+            client.publish("1", message)
+            print("Message sent.")
+    except KeyboardInterrupt:
+        print("Exiting...")
+    finally:
+        client.loop_stop()
+        client.disconnect()
+
+if __name__ == "__main__":
+    main()

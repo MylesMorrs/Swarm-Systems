@@ -12,17 +12,21 @@ def on_connect(client, userdata, flags, reasonCode, properties):
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
 
-client.on_connect = on_connect
-client.on_message = on_message
+def main():
+    client.on_connect = on_connect
+    client.on_message = on_message
 
-client.connect(ip_address, 1883, 60)
-client.loop_start()  # Start the network loop in a background thread
+    client.connect(ip_address, 1883, 60)
+    client.loop_start()  # Start the network loop in a background thread
 
-try:
-    while True:
-        client.publish("1", input("Enter message to publish: "))
-        # print("Message sent.")
-except KeyboardInterrupt:
-    print("Exiting...")
-    client.loop_stop()
-    client.disconnect()
+    try:
+        while True:
+            client.publish("1", input("Enter message to publish: "))
+            # print("Message sent.")
+    except KeyboardInterrupt:
+        print("Exiting...")
+        client.loop_stop()
+        client.disconnect()
+
+if __name__ == "__main__":
+    main()
