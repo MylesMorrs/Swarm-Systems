@@ -7,7 +7,7 @@ ip_address = "192.168.1.85"
 
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
-    client.subscribe("test/topic")
+    client.subscribe("2")
 
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
@@ -20,7 +20,7 @@ client.loop_start()  # Start the network loop in a background thread
 
 try:
     while True:
-        client.publish("test/topic", input("Enter message to publish: "))
+        client.publish("1", input("Enter message to publish: "))
         # print("Message sent.")
 except KeyboardInterrupt:
     print("Exiting...")
