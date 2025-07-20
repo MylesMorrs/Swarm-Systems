@@ -23,4 +23,7 @@ Packages:
 	pip install paho-mqtt
 
 Docs:
-	https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
+
+	GUI:	https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
+	MQTT:	https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html
+	
