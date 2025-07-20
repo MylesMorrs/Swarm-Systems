@@ -9,10 +9,14 @@ def on_connect(client, userdata, flags, reasonCode, properties):
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
 
-# Use the CallbackAPIVersion enum
-client = mqtt.Client(protocol=mqtt.MQTTv5)
-client.on_connect = on_connect
-client.on_message = on_message
+def main():
+    # Use the CallbackAPIVersion enum
+    client = mqtt.Client(protocol=mqtt.MQTTv5)
+    client.on_connect = on_connect
+    client.on_message = on_message
 
-client.connect(ip_address, 1883, 60)
-client.loop_forever()
+    client.connect(ip_address, 1883, 60)
+    client.loop_forever()
+
+if __name__ == "__main__":
+    main()
