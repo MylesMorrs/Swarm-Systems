@@ -10,14 +10,14 @@ def main():
     pipeline = Gst.parse_launch(
         "v4l2src device=/dev/video0 ! "
         "videoconvert ! "
-        "x264enc tune=zerolatency bitrate=500 speed-preset=ultrafast ! "
-        "rtph264pay ! "
-        "udpsink host=192.168.1.100 port=5000"
+        "tee name=t "
+        "t. ! queue ! x264enc tune=zerolatency bitrate=500 speed-preset=ultrafast ! rtph264pay ! udpsink host=127.0.0.1 port=5000 "
+        "t. ! queue ! autovideosink"
     )
 
     pipeline.set_state(Gst.State.PLAYING)
 
-    print("Streaming video via UDP... Press Ctrl+C to stop.")
+    print("Streaming and displaying video... Press Ctrl+C to stop.")
     try:
         signal.pause()
     except KeyboardInterrupt:
