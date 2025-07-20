@@ -8,7 +8,11 @@ ip_address = input("Input IP Address Of Mother (broker): ")
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
 
+def on_message(client, userdata, msg):
+    print(f"Received message on {msg.topic}: {msg.payload.decode()}")
+
 client.on_connect = on_connect
+client.on_message = on_message
 
 client.connect(ip_address, 1883, 60)
 client.loop_start()  # Start the network loop in a background thread
