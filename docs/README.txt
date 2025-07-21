@@ -1,41 +1,86 @@
-Idea:
-	Have one "Mother" computer that talks to the drones and coordinates everything.
-	
-	Would be nice if mother can receive video and sensor data to have a better understanding of the environment.
-	
-	On each drone we will have a raspberry pi zero with a RTK GPS (~2cm). The raspberry pi will get the GPS coordinates
-	and publish to the drone at about 5 times a second (Max RTX gps refresh rate). Along with the GPS info it will send Ardupilot 
-	(Running on the flight controller) commands like "Take off", "Land", and "Go to this way point"
 
-Normal communication:
-	MQTT with MAVLink underneath
-	Mother run Mosquitto 
-	
-Video communication:
-	GStreamer over UDP (Unicast)
-		Video compressed with h.264
-			center based video resolution  
-		Keep resolution down to min possible
-		Goal of 10-15 FPS
-test
+Drone Swarm System - Communication Architecture
+===============================================
 
-Packages:
-	pip install paho-mqtt
-	pip install PyGObject
-	pip install dearpygui
-	
-	Linux Reciveing/ Mother needs to run on terminal
-		sudo apt update
-			sudo apt install python3-gi python3-gi-cairo gir1.2-gst-plugins-base-1.0 \
-    		gir1.2-gstreamer-1.0 gstreamer1.0-tools \
-    		gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
-    		gstreamer1.0-plugins-ugly gstreamer1.0-libav
-	For Windows Transmitions: 
-		https://gstreamer.freedesktop.org/download/#windows
+System Overview
+---------------
+Mother Computer (Ground Station):
+- Coordinates all drones.
+- Receives video and sensor data for situational awareness.
+- Runs MQTT broker (Mosquitto) for communication.
+- Displays telemetry and video feeds via GUI.
+
+Drones:
+- Raspberry Pi Zero with RTK GPS (~2cm accuracy).
+- Publishes GPS data to flight controller at ~5Hz.
+- Sends Ardupilot MAVLink commands (Takeoff, Land, Waypoint).
 
 
-Docs:
+Communication Breakdown
+------------------------
 
-	GUI:	https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
-	MQTT:	https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html
-	RTK GPS Guide:	https://www.waveshare.com/wiki/LC29H(XX)_GPS/RTK_HAT
+Normal Communication (Telemetry & Commands):
+- Protocol: MQTT
+- Payload: MAVLink messages
+- Broker: Mosquitto on Mother computer
+
+Video Communication (One-way):
+- Protocol: GStreamer over UDP (Unicast)
+- Encoding: H.264
+- Framerate Goal: 10-15 FPS
+- Resolution: Center-cropped; minimal viable resolution
+- Direction: Drone --> Mother only
+
+
+Required Packages
+-----------------
+
+Python Packages (both sender & receiver):
+    pip install paho-mqtt
+    pip install PyGObject
+    pip install dearpygui
+
+Linux (Mother / Receiver) System Packages:
+    sudo apt update
+    sudo apt install python3-gi python3-gi-cairo gir1.2-gst-plugins-base-1.0 \
+        gir1.2-gstreamer-1.0 gstreamer1.0-tools \
+        gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+        gstreamer1.0-plugins-ugly gstreamer1.0-libav
+
+Windows (Drone / Sender) Setup for GStreamer:
+---------------------------------------------
+1. Download and install GStreamer Full Runtime (MSVC 64-bit) from:
+   https://gstreamer.freedesktop.org/download/#windows
+
+2. Ensure these directories are added to your Windows PATH:
+   C:\gstreamer\1.0\x86_64\bin
+   C:\gstreamer\1.0\x86_64\lib\gstreamer-1.0
+
+3. Restart MSYS2 MinGW 64-bit terminal after updating PATH.
+
+4. Confirm plugins are available:
+    - Run in cmd or PowerShell:
+      gst-inspect-1.0 dshowvideosrc
+      gst-inspect-1.0 ksvideosrc
+
+    If dshowvideosrc fails, use ksvideosrc.
+
+5. Test video input:
+    gst-launch-1.0 ksvideosrc ! autovideosink
+
+6. For your Python pipeline, use ksvideosrc with device-name set to "Integrated Camera".
+
+
+Useful Docs & References
+-------------------------
+GUI:    https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
+MQTT:   https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html
+RTK GPS: https://www.waveshare.com/wiki/LC29H(XX)_GPS/RTK_HAT
+
+
+Project Idea Summary
+--------------------
+- Central "Mother" computer for coordination and monitoring.
+- Drones report GPS + low-bandwidth video.
+- Lightweight, low-latency stack: MQTT + UDP Video.
+- Ready for future swarm behaviors and autonomy.
