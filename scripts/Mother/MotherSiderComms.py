@@ -4,12 +4,14 @@ import time
 
 client = mqtt.Client(protocol=mqtt.MQTTv5)
 
-ip_address = "129.138.175.43"
+ip_address = "192.168.1.85"
 
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
-    client.subscribe("2")
-
+    client.subscribe([
+        ("config"),
+        ("2")
+        ])
 
 RECONNECT_DELAY = 1
 MAX_RECONNECT_COUNT = 60

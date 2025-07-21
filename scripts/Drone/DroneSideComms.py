@@ -1,18 +1,35 @@
 import paho.mqtt.client as mqtt
 import socket
 import time
+import Config  
+from Config import id
 
 client = mqtt.Client(protocol=mqtt.MQTTv5)
-
-ip_address = "129.138.175.43"
-
-def on_connect(client, userdata, flags, reasonCode, properties):
-    print("Connected with reason code", reasonCode)
-    client.subscribe("2")
-
+ip_address = "192.168.1.85"
 
 RECONNECT_DELAY = 1
 MAX_RECONNECT_COUNT = 60
+
+def update_config_id(new_id):
+    lines = []
+    with open('Config.py', 'r') as file:
+        for line in file:
+            if line.strip().startswith('id ='):
+                lines.append(f"id = {new_id}\n")
+            else:
+                lines.append(line)
+    with open('Config.py', 'w') as file:
+        file.writelines(lines)
+
+def on_connect(client, userdata, flags, reasonCode, properties):
+    print("Connected with reason code", reasonCode)
+    client.publish("config", id)
+    Config.id = 99
+    # Subscribe to the topics you want to listen to
+    client.subscribe([
+        ("config", 0),
+        ("2", 0)
+        ])
 
 def on_disconnect(client, userdata, rc):
     print("Disconnected with result code: %s", rc)
