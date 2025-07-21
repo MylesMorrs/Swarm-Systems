@@ -39,6 +39,7 @@ Python Packages (both sender & receiver):
     pip install paho-mqtt
     pip install PyGObject
     pip install dearpygui
+	pip install dearpygui-map
 
 Linux (Mother / Receiver) System Packages:
     sudo apt update
