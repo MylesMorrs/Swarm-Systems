@@ -4,7 +4,7 @@ Drone Swarm System - Communication Architecture
 
 System Overview
 ---------------
-Mother Computer (Ground Station):
+Mother Drone:
 - Coordinates all drones.
 - Receives video and sensor data for situational awareness.
 - Runs MQTT broker (Mosquitto) for communication.
@@ -37,7 +37,7 @@ Required Packages
 
 Python Packages (both sender & receiver):
     pip install paho-mqtt
-    pip install PyGObject
+    pip install PyGObject (Only Works On Linux Systems)
     pip install dearpygui
 
 Linux (Mother / Receiver) System Packages:
@@ -55,15 +55,15 @@ Windows (Drone / Sender) Setup for GStreamer:
 2. Ensure these directories are added to your Windows PATH:
    C:\gstreamer\1.0\x86_64\bin
    C:\gstreamer\1.0\x86_64\lib\gstreamer-1.0
+		Press Windows + S then search for enviromental variables
+		click the one labeled path and press edit
+		create new and upload path for above files (Create new for each file path)
 
 3. Restart MSYS2 MinGW 64-bit terminal after updating PATH.
 
 4. Confirm plugins are available:
     - Run in cmd or PowerShell:
-      gst-inspect-1.0 dshowvideosrc
       gst-inspect-1.0 ksvideosrc
-
-    If dshowvideosrc fails, use ksvideosrc.
 
 5. Test video input:
     gst-launch-1.0 ksvideosrc ! autovideosink
