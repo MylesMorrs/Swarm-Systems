@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         self.browser = QWebEngineView()
         # Ensure the HTML file is in the same directory as your Python script
         # or provide the full path to the HTML file.
-        with open("map.html", "r") as f: # Use 'index.html' or your actual file name.
+        with open("/home/mcuser/Mother/scripts/map.html", "r") as f: # Use 'index.html' or your actual file name.
             html_content = f.read()
         self.browser.setHtml(html_content)
 
