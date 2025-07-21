@@ -1,5 +1,5 @@
 import gi
-import signal
+import time
 
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
@@ -19,7 +19,8 @@ def main():
 
     print("Receiving video stream on UDP port 5000... Press Ctrl+C to stop.")
     try:
-        signal.pause()
+        while True:
+            time.sleep(1)
     except KeyboardInterrupt:
         pass
     finally:
