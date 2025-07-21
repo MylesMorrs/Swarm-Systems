@@ -22,6 +22,8 @@ test
 Packages:
 	pip install paho-mqtt
 	pip install PyGObject
+	pip install dearpygui
+	
 	Linux Reciveing/ Mother needs to run on terminal
 		sudo apt update
 			sudo apt install python3-gi python3-gi-cairo gir1.2-gst-plugins-base-1.0 \
@@ -36,4 +38,4 @@ Docs:
 
 	GUI:	https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
 	MQTT:	https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html
-	
+	RTK GPS Guide:	https://www.waveshare.com/wiki/LC29H(XX)_GPS/RTK_HAT
