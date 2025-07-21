@@ -40,6 +40,9 @@ Python Packages (both sender & receiver):
     pip install PyGObject
     pip install dearpygui
 	pip install dearpygui-map
+	pip install PyQt5 PyQtWebEngine
+    sudo apt install libqt5webengine5 libqt5webenginewidgets5 libqt5gui5
+
 
 Linux (Mother / Receiver) System Packages:
     sudo apt update
