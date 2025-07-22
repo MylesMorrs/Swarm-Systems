@@ -64,8 +64,8 @@ def on_message(client, userdata, msg):
             try:
                 new_id = int(payload.split()[1])
                 # Set the drone's ID variable here
-                drone_id = new_id
-                print(f"Drone ID updated to: {drone_id}")
+                print(f"Drone ID updated to: {new_id}")
+                update_config_id(new_id)
                 newid = False
             except (IndexError, ValueError):
                 print("Invalid ID format received.")
