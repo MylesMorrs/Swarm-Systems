@@ -4,7 +4,7 @@ import time
 
 client = mqtt.Client(protocol=mqtt.MQTTv5)
 
-ip_address = "192.168.1.85"
+ip_address = "localhost"  # Replace with your MQTT broker IP address
 
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)

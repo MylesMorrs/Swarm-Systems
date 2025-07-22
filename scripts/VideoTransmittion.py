@@ -8,7 +8,7 @@ def main():
     Gst.init(None)
 
     # Replace with your Linux receiver IP here:
-    receiver_ip = "192.168.1.100"
+    receiver_ip = "129.138.175.43"
     video_device = "Integrated Camera"  # Your camera name
 
     # Build pipeline:

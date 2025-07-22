@@ -79,7 +79,7 @@ Useful Docs & References
 -------------------------
 GUI:    https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
 MQTT:   https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html
-RTK GPS: https://www.waveshare.com/wiki/LC29H(XX)_GPS/RTK_HAT
+RTK GPS: https://www.wavesshare.com/wiki/LC29H(XX)_GPS/RTK_HAT
 
 
 Project Idea Summary
