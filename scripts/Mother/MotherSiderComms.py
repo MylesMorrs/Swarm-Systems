@@ -1,20 +1,32 @@
 import paho.mqtt.client as mqtt
 import socket
 import time
+from MotherConfig import numdrone
 
 client = mqtt.Client(protocol=mqtt.MQTTv5)
 
-ip_address = "192.168.1.85"
+ip_address = "129.138.175.43"
+
+RECONNECT_DELAY = 1
+MAX_RECONNECT_COUNT = 60
+
+def update_config_numdrones(numdrones):
+    lines = []
+    with open('MotherConfig.py', 'r') as file:
+        for line in file:
+            if line.strip().startswith('numdrone ='):
+                lines.append(f"numdrone = '{numdrones}'\n")
+            else:
+                lines.append(line)
+    with open('MotherConfig.py', 'w') as file:
+        file.writelines(lines)
 
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
     client.subscribe([
-        ("config"),
-        ("2")
+        ("drone/config", 0),
+        ("all/alert", 0)
         ])
-
-RECONNECT_DELAY = 1
-MAX_RECONNECT_COUNT = 60
 
 def on_disconnect(client, userdata, rc):
     print("Disconnected with result code: %s", rc)
@@ -37,6 +49,19 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
+    topic = msg.topic
+    payload = msg.payload.decode()
+
+    # Only handle messages from a specific topic
+    if topic == "drone/config":
+        if payload.isdigit('0000'):
+            new_id = numdrone + 1
+            client.publish("drone/config", f'mother {new_id}')
+            update_config_numdrones(new_id)
+            print(f"Updated ID in config to: {new_id}")
+   # Ignore any other topics
+    else:
+        pass
 
 def main():
     client.on_connect = on_connect

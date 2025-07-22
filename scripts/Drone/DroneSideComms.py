@@ -10,12 +10,14 @@ ip_address = "192.168.1.85"
 RECONNECT_DELAY = 1
 MAX_RECONNECT_COUNT = 60
 
+newid = False
+
 def update_config_id(new_id):
     lines = []
     with open('Config.py', 'r') as file:
         for line in file:
             if line.strip().startswith('id ='):
-                lines.append(f"id = {new_id}\n")
+                lines.append(f"id = '{new_id}'\n")
             else:
                 lines.append(line)
     with open('Config.py', 'w') as file:
@@ -24,11 +26,12 @@ def update_config_id(new_id):
 def on_connect(client, userdata, flags, reasonCode, properties):
     print("Connected with reason code", reasonCode)
     client.publish("config", id)
-    Config.id = 99
+    if id == '0000':
+        newid = True
     # Subscribe to the topics you want to listen to
     client.subscribe([
-        ("config", 0),
-        ("2", 0)
+        ("drone/config", 0),
+        ("all/alert", 0)
         ])
 
 def on_disconnect(client, userdata, rc):
@@ -52,6 +55,23 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, msg):
     print(f"Received message on {msg.topic}: {msg.payload.decode()}")
+    topic = msg.topic
+    payload = msg.payload.decode()
+
+    # Only handle messages from a specific topic
+    if topic == "drone/config":
+        if payload.startswith("mother ") and newid:
+            try:
+                new_id = int(payload.split()[1])
+                # Set the drone's ID variable here
+                drone_id = new_id
+                print(f"Drone ID updated to: {drone_id}")
+                newid = False
+            except (IndexError, ValueError):
+                print("Invalid ID format received.")
+   # Ignore any other topics
+    else:
+        pass
 
 def main():
     client.on_connect = on_connect
