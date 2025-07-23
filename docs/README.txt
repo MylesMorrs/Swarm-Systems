@@ -84,7 +84,8 @@ GUI:    https://dearpygui.readthedocs.io/en/latest/documentation/themes.html
 MQTT:   https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html
 RTK GPS: https://www.waveshare.com/wiki/LC29H(XX)_GPS/RTK_HAT
         https://indystry.cc/how-to-use-lc29h-the-cheapest-gps-rtk-module/
-        
+MAVLink: https://ardupilot.org/dev/docs/raspberry-pi-via-mavlink.html
+
 
 
 Project Idea Summary
