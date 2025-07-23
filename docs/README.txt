@@ -74,6 +74,9 @@ Windows (Drone / Sender) Setup for GStreamer:
 
 6. For your Python pipeline, use ksvideosrc with device-name set to "Integrated Camera".
 
+Opening Virtual Enviroment:
+ In the command prompt run "Source (File Path Here)". 
+ For us that would be running "Source /home/ds/myenv/bin/activate
 
 Useful Docs & References
 -------------------------
