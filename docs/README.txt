@@ -76,7 +76,7 @@ Windows (Drone / Sender) Setup for GStreamer:
 
 Opening Virtual Enviroment:
  In the command prompt run "Source (File Path Here)". 
- For us that would be running "Source /home/ds/myenv/bin/activate
+ For us that would be running "Source /home/ds/myenv/bin/activate"
 
 Useful Docs & References
 -------------------------
